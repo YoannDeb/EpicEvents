@@ -80,7 +80,11 @@ WSGI_APPLICATION = 'epic_events.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'OPTIONS': {
+          'service': 'my_service',
+          'passfile': '.my_pgpasspsql'
+        },
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
