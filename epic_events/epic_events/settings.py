@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from datetime import timedelta
 from pathlib import Path
 import mimetypes
 
@@ -41,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'authentification',
+    'sales',
+    'support'
 ]
 
 MIDDLEWARE = [
@@ -78,23 +82,13 @@ WSGI_APPLICATION = 'epic_events.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql', # on utilise l'adaptateur postgresql
-#         'NAME': 'epicevents', # le nom de notre base de donnees creee precedemment
-#         'USER': 'postgres', # attention : remplacez par votre nom d'utilisateur
-#         'PASSWORD': 'Mpdze6kp',
-#         'HOST': '',
-#         'PORT': '5432',
-#         },
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql', # on utilise l'adaptateur postgresql
-        'SERVICE': 'epicevents',
-        'PASSFILE': 'p.my_pgpass', # attention : remplacez par votre nom d'utilisateur
+        'OPTIONS': {
+            'service': 'epicevents',
         },
+    }
 }
 
 
@@ -141,6 +135,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 INTERNAL_IPS = ['127.0.0.1']
 
+AUTH_USER_MODEL = 'authentification.CustomUser'
+
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
@@ -150,3 +146,14 @@ STATIC_ROOT = Path.joinpath(BASE_DIR, 'epic_events', 'static')
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
 }
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES':
+    #     ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+    #   'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    #   'PAGE_SIZE': 6,
+}
+
