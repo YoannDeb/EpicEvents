@@ -45,7 +45,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'id'
-    REQUIRED_FIELDS = ['first_name', 'last_name']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.email}"
