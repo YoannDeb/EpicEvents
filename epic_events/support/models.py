@@ -9,11 +9,14 @@ class Event(models.Model):
     - A sale user
     - A client.
     """
-    support_contact = models.ForeignKey(null=True, to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL)
-    client = models.ForeignKey(null=True, to='authentification.CLIENT', on_delete=models.SET_NULL)
+    client = models.ForeignKey(blank=True, null=True, to='authentification.CLIENT', on_delete=models.SET_NULL)
+    support_contact = models.ForeignKey(blank=True, null=True, to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=50)
-    attendees = models.IntegerField(null=True)
-    event_date = models.DateTimeField(null=True)
-    notes = models.TextField(max_length=5000, null=True)
+    status = models.BooleanField(default=False)
+    attendees = models.IntegerField(blank=True)
+    event_date = models.DateTimeField(blank=True)
+    notes = models.TextField(max_length=5000, blank=True)
+
+    def __str__(self):
+        return str(self.client)
