@@ -30,13 +30,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     Custom user,
     Declared in settings.py
     """
-    first_name = models.CharField(max_length=100, null=True)
-    last_name = models.CharField(max_length=100, null=True)
+    first_name = models.CharField(max_length=100, blank=True)
+    last_name = models.CharField(max_length=100, blank=True)
     email = models.EmailField(
         max_length=255, unique=True, verbose_name='email address',
         error_messages={'unique': 'A user with this email already exists.'})
-    phone = models.CharField(max_length=100, null=True)
-    mobile = models.CharField(max_length=100, null=True)
+    phone = models.CharField(max_length=100, blank=True)
+    mobile = models.CharField(max_length=100, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -44,8 +44,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'id'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.email}"
@@ -71,9 +71,13 @@ class Client(models.Model):
     email = models.EmailField(
         max_length=255, unique=True, verbose_name='email address',
         error_messages={'unique': 'A user with this email already exists.'})
-    phone = models.CharField(max_length=100)
-    mobile = models.CharField(max_length=100)
-    company_name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=100, blank=True)
+    mobile = models.CharField(max_length=100, blank=True)
+    company_name = models.CharField(max_length=100, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    sales_contact = models.ForeignKey(null=True, to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL)
+    sales_contact = models.ForeignKey(blank=True, null=True, to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL)
+
+    def __str__(self):
+        client_name = f"{self.first_name} {self.last_name} - {self.email}"
+        return client_name
