@@ -9,10 +9,13 @@ class Contract(models.Model):
     - A sale user
     - A client.
     """
-    sales_contact = models.ForeignKey(null=True, to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL)
-    client = models.ForeignKey(null=True, to='authentification.CLIENT', on_delete=models.SET_NULL)
+    client = models.ForeignKey(blank=True, null=True, to='authentification.CLIENT', on_delete=models.SET_NULL)
+    sales_contact = models.ForeignKey(blank=True, null=True, to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
     status = models.BooleanField(default=False)
-    amount = models.FloatField(null=True)
-    payment_due = models.DateTimeField(null=True)
+    amount = models.FloatField(blank=True)
+    payment_due = models.DateTimeField(blank=True)
+
+    def __str__(self):
+        return str(self.client)
