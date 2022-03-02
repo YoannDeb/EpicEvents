@@ -18,6 +18,10 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
+from authentification import urls as authentification_urls
+from sales import urls as sales_urls
+from support import urls as support_urls
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls'))
@@ -27,4 +31,7 @@ if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
         path('__debug__/', include(debug_toolbar.urls)),
+        path('', include(authentification_urls)),
+        path('', include(sales_urls)),
+        path('', include(support_urls))
     ] + urlpatterns
