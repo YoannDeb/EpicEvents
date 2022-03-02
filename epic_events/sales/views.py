@@ -5,11 +5,6 @@ from .serializers import ContractSerializer
 
 
 class ContractViewSet(viewsets.ModelViewSet):
+    queryset = Contract.objects.all()
     serializer_class = ContractSerializer
-
-    def get_permissions(self):
-        permission_classes = [permissions.IsAuthenticated()]
-        return permission_classes
-
-    def get_queryset(self):
-        return Contract.objects.all()
+    permission_classes = [permissions.IsAuthenticated]

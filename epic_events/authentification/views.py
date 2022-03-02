@@ -5,23 +5,12 @@ from .serializers import ClientSerializer, UserSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
-
-    def get_permissions(self):
-        permission_classes = [permissions.IsAuthenticated]
-        return permission_classes
-
-    def get_queryset(self):
-        return CustomUser.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class ClientViewSet(viewsets.ModelViewSet):
+    queryset = Client.objects.all()
     serializer_class = ClientSerializer
-
-    def get_permissions(self):
-        permission_classes = [permissions.IsAuthenticated()]
-        return permission_classes
-
-    def get_queryset(self):
-        return Client.objects.all()
-
+    permission_classes = [permissions.IsAuthenticated]

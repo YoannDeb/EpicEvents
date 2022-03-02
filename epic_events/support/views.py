@@ -5,12 +5,7 @@ from .serializers import EventSerializer
 
 
 class EventViewSet(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
     serializer_class = EventSerializer
-
-    def get_permissions(self):
-        permission_classes = [permissions.IsAuthenticated()]
-        return permission_classes
-
-    def get_queryset(self):
-        return Event.objects.all()
+    permission_classes = [permissions.IsAuthenticated]
 
