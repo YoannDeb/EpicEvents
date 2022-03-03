@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.models import AbstractUser, PermissionsMixin, BaseUserManager
 from django.db import models, transaction
 from django.conf import settings
 
@@ -25,13 +25,11 @@ class CustomUserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
+class CustomUser(AbstractUser, PermissionsMixin):
     """
     Custom user,
     Declared in settings.py
     """
-    first_name = models.CharField(max_length=100, blank=True)
-    last_name = models.CharField(max_length=100, blank=True)
     email = models.EmailField(
         max_length=255, unique=True, verbose_name='email address',
         error_messages={'unique': 'A user with this email already exists.'})
@@ -40,7 +38,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
-    is_active = models.BooleanField(default=True)
+    date_joined = None
+    username = None
 
     objects = CustomUserManager()
 
@@ -50,11 +49,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} - {self.email}"
-
-    @property
-    def is_staff(self):
-        """Is the user a member of staff?"""
-        return self.is_superuser
 
     class Meta:
         verbose_name = "User"
