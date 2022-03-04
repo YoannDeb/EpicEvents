@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from authentification import urls as authentification_urls
 from sales import urls as sales_urls
@@ -30,6 +31,8 @@ urlpatterns = [
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
+        path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+        path('login/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
         path('__debug__/', include(debug_toolbar.urls)),
         path('', include(authentification_urls)),
         path('', include(sales_urls)),
