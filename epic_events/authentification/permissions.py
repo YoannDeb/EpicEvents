@@ -17,7 +17,8 @@ class IsClientResponsible(BasePermission):
     message = "Access forbidden: You are not responsible of this client."
 
     def has_permission(self, request, view):
-        client_pk = int(request.resolver_match.kwargs['client_pk'])
+        print(request.resolver_match.kwargs)
+        client_pk = int(request.resolver_match.kwargs['pk'])
         client = Client.objects.get(pk=client_pk)
 
         return request.user == client.sales_contact
