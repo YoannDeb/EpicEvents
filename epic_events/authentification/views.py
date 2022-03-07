@@ -8,7 +8,7 @@ from .permissions import IsClientResponsible, IsInSalesTeam
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated()]
 
 
 class ClientViewSet(viewsets.ModelViewSet):
@@ -16,11 +16,11 @@ class ClientViewSet(viewsets.ModelViewSet):
     serializer_class = ClientSerializer
 
     def get_permissions(self):
-        permission_classes = [permissions.IsAuthenticated]
+        permission_classes = [permissions.IsAuthenticated()]
         if self.action == 'retrieve' or self.action == 'list':
-            permission_classes = [permissions.IsAuthenticated]
+            permission_classes = [permissions.IsAuthenticated()]
         if self.action == 'create':
-            permission_classes = [permissions.IsAuthenticated, IsInSalesTeam]
+            permission_classes = [permissions.IsAuthenticated(), IsInSalesTeam()]
         if self.action == 'destroy' or self.action == 'update' or self.action == 'partial_update':
-            permission_classes = [permissions.IsAuthenticated, IsClientResponsible]
+            permission_classes = [permissions.IsAuthenticated(), IsClientResponsible()]
         return permission_classes
