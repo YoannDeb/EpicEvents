@@ -23,6 +23,9 @@ from authentification import urls as authentification_urls
 from sales import urls as sales_urls
 from support import urls as support_urls
 
+admin.site.site_header = 'Epic Events CRM Administration'
+admin.site.site_title = 'Epic Events CRM Administration'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls'))
