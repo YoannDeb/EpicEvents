@@ -4,7 +4,7 @@ from rest_framework import routers
 from .views import EventViewSet
 
 router = routers.DefaultRouter()
-router.register(r'events', EventViewSet)
+router.register(r'events', EventViewSet, basename=EventViewSet)
 
 urlpatterns = [
     path('', include(router.urls))
