@@ -85,6 +85,8 @@ class ClientAdmin(admin.ModelAdmin):
         'first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'date_created', 'date_updated',
         'sales_contact')
 
+    search_fields = ('first_name', 'last_name', 'email', 'company_name')
+
     def get_actions(self, request):
         actions = super().get_actions(request)
         if not request.user.is_superuser:
