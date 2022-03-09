@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from .models import CustomUser, Client
+from .permissions import IsClientResponsible
 
 """
 Some modifications to support custom user in admin.
@@ -57,7 +58,9 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'first_name', 'last_name', 'phone', 'mobile', 'date_created', 'date_updated', 'is_superuser', 'is_staff')
+    list_display = (
+        'email', 'first_name', 'last_name', 'phone', 'mobile', 'date_created', 'date_updated', 'is_superuser',
+        'is_staff')
     list_filter = ('is_superuser',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
@@ -78,7 +81,32 @@ class UserAdmin(BaseUserAdmin):
 
 
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'date_created', 'date_updated', 'sales_contact')
+    list_display = (
+        'first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'date_created', 'date_updated',
+        'sales_contact')
+
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if not request.user.is_superuser:
+            try:
+                del actions['delete_selected']
+            except KeyError:
+                pass
+        return actions
+
+    def get_readonly_fields(self, request, obj=None):
+        read_only_fields = super().get_readonly_fields(request)
+        try:
+            client_pk = int(request.resolver_match.kwargs['object_id'])
+            client = Client.objects.get(pk=client_pk)
+            sales_contact = client.sales_contact
+            if request.user != sales_contact:
+                read_only_fields = read_only_fields + (
+                    'first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'date_created', 'date_updated',
+                    'sales_contact')
+        except KeyError:
+            pass
+        return read_only_fields
 
 
 admin.site.register(CustomUser, UserAdmin)
