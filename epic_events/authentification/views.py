@@ -27,16 +27,3 @@ class ClientViewSet(viewsets.ModelViewSet):
         if self.action == 'destroy' or self.action == 'update' or self.action == 'partial_update':
             permission_classes = [permissions.IsAuthenticated(), IsClientResponsible()]
         return permission_classes
-
-    # def get_queryset(self):
-    #     queryset = Client.objects.all()
-    #     last_name = self.request.query_params.get('last_name')
-    #     email = self.request.query_params.get('email')
-    #     if last_name and email:
-    #         queryset = queryset.filter(last_name=last_name, email=email)
-    #     elif last_name:
-    #         queryset = queryset.filter(last_name=last_name)
-    #     elif email:
-    #         queryset = queryset.filter(email=email)
-    #     return queryset
-
