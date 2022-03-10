@@ -5,6 +5,8 @@ from .models import Event
 class EventAdmin(admin.ModelAdmin):
     list_display = ('client', 'support_contact', 'date_created', 'date_updated', 'status', 'attendees', 'event_date', 'notes')
 
+    search_fields = ('client__first_name', 'client__last_name', 'client__email', 'client__company_name', 'event_date__startswith')
+
     # def get_actions(self, request):
     #     client_pk = int(request.resolver_match.kwargs['pk'])
     #     client = Client.objects.get(pk=client_pk)
