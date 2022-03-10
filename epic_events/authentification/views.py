@@ -1,4 +1,5 @@
 from rest_framework import viewsets, permissions
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Client, CustomUser
 from .serializers import ClientSerializer, UserSerializer
@@ -12,8 +13,10 @@ class UserViewSet(viewsets.ModelViewSet):
 
 
 class ClientViewSet(viewsets.ModelViewSet):
-    # queryset = Client.objects.all()
+    queryset = Client.objects.all()
     serializer_class = ClientSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['last_name', 'email']
 
     def get_permissions(self):
         permission_classes = [permissions.IsAuthenticated()]
@@ -25,15 +28,15 @@ class ClientViewSet(viewsets.ModelViewSet):
             permission_classes = [permissions.IsAuthenticated(), IsClientResponsible()]
         return permission_classes
 
-    def get_queryset(self):
-        queryset = Client.objects.all()
-        last_name = self.request.query_params.get('last_name')
-        email = self.request.query_params.get('email')
-        if last_name and email:
-            queryset = queryset.filter(last_name=last_name, email=email)
-        elif last_name:
-            queryset = queryset.filter(last_name=last_name)
-        elif email:
-            queryset = queryset.filter(email=email)
-        return queryset
+    # def get_queryset(self):
+    #     queryset = Client.objects.all()
+    #     last_name = self.request.query_params.get('last_name')
+    #     email = self.request.query_params.get('email')
+    #     if last_name and email:
+    #         queryset = queryset.filter(last_name=last_name, email=email)
+    #     elif last_name:
+    #         queryset = queryset.filter(last_name=last_name)
+    #     elif email:
+    #         queryset = queryset.filter(email=email)
+    #     return queryset
 
