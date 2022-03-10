@@ -5,18 +5,7 @@ from .utils import get_event_from_admin_request, get_sales_contact_of_client_fro
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('client', 'support_contact', 'date_created', 'date_updated', 'status', 'attendees', 'event_date', 'notes')
-
     search_fields = ('client__first_name', 'client__last_name', 'client__email', 'client__company_name', 'event_date__startswith')
-
-    # def get_actions(self, request):
-    #     client_pk = int(request.resolver_match.kwargs['pk'])
-    #     client = Client.objects.get(pk=client_pk)
-    #     actions = super().get_actions(request)
-    #     if request.user != client.sales_contact:
-    #         del actions['delete_selected']
-    #     print(actions)
-    #     del actions['delete_selected']
-    #     return actions
 
     def get_actions(self, request):
         actions = super().get_actions(request)
