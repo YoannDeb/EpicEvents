@@ -54,7 +54,7 @@ class ClientSerializer(serializers.ModelSerializer):
         fields = ['id', 'first_name', 'last_name', 'email', 'phone', 'mobile', 'date_created', 'date_updated', 'company_name', 'sales_contact']
 
 
-class CreateClientSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Client
-        fields = ['first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'sales_contact']
+# class CreateClientSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Client
+#         fields = ['first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'sales_contact']
