@@ -4,6 +4,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from .models import CustomUser, Client
+from .utils import get_sales_contact_from_admin_request
 
 """
 Some modifications to support custom user in admin.
@@ -98,9 +99,7 @@ class ClientAdmin(admin.ModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         read_only_fields = super().get_readonly_fields(request)
         try:
-            client_pk = int(request.resolver_match.kwargs['object_id'])
-            client = Client.objects.get(pk=client_pk)
-            sales_contact = client.sales_contact
+            sales_contact = get_sales_contact_from_admin_request(request)
             if request.user != sales_contact:
                 read_only_fields = read_only_fields + (
                     'first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'date_created',
@@ -112,9 +111,7 @@ class ClientAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         if request.resolver_match.url_name == 'authentification_client_change':
             try:
-                client_pk = int(request.resolver_match.kwargs['object_id'])
-                client = Client.objects.get(pk=client_pk)
-                sales_contact = client.sales_contact
+                sales_contact = get_sales_contact_from_admin_request(request)
                 return request.user == sales_contact or request.user.is_superuser
             except KeyError:
                 pass
