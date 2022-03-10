@@ -49,6 +49,10 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
 
 class ClientSerializer(serializers.ModelSerializer):
+    sales_contact_first_name = serializers.CharField(read_only=True, source='sales_contact.first_name')
+    sales_contact_last_name = serializers.CharField(read_only=True, source='sales_contact.last_name')
+    sales_contact_email = serializers.CharField(read_only=True, source='sales_contact.email')
+
     class Meta:
         model = Client
-        fields = ['id', 'first_name', 'last_name', 'email', 'phone', 'mobile', 'date_created', 'date_updated', 'company_name', 'sales_contact']
+        fields = ['id', 'first_name', 'last_name', 'email', 'phone', 'mobile', 'date_created', 'date_updated', 'company_name', 'sales_contact', 'sales_contact_first_name', 'sales_contact_last_name', 'sales_contact_email']
