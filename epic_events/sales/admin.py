@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Contract
+from .utils import get_sales_contact_of_client_of_contract_from_admin_request
 
 
 class ContractAdmin(admin.ModelAdmin):
@@ -19,10 +20,7 @@ class ContractAdmin(admin.ModelAdmin):
     def get_readonly_fields(self, request, obj=None):
         read_only_fields = super().get_readonly_fields(request)
         try:
-            contract_pk = int(request.resolver_match.kwargs['object_id'])
-            contract = Contract.objects.get(pk=contract_pk)
-            client = contract.client
-            sales_contact = client.sales_contact
+            sales_contact = get_sales_contact_of_client_of_contract_from_admin_request(request)
             if request.user != sales_contact:
                 read_only_fields = read_only_fields + ('client', 'date_created', 'date_updated', 'status', 'amount', 'payment_due')
         except KeyError:
@@ -32,10 +30,7 @@ class ContractAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         if request.resolver_match.url_name == 'sales_contract_change':
             try:
-                contract_pk = int(request.resolver_match.kwargs['object_id'])
-                contract = Contract.objects.get(pk=contract_pk)
-                client = contract.client
-                sales_contact = client.sales_contact
+                sales_contact = get_sales_contact_of_client_of_contract_from_admin_request(request)
                 return request.user == sales_contact or request.user.is_superuser
             except KeyError:
                 pass
