@@ -29,5 +29,17 @@ class ContractAdmin(admin.ModelAdmin):
             pass
         return read_only_fields
 
+    def has_delete_permission(self, request, obj=None):
+        if request.resolver_match.url_name == 'sales_contract_change':
+            try:
+                contract_pk = int(request.resolver_match.kwargs['object_id'])
+                contract = Contract.objects.get(pk=contract_pk)
+                client = contract.client
+                sales_contact = client.sales_contact
+                return request.user == sales_contact or request.user.is_superuser
+            except KeyError:
+                pass
+        return super().has_delete_permission(request)
+
 
 admin.site.register(Contract, ContractAdmin)
