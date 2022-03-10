@@ -4,6 +4,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Client, CustomUser
 from .serializers import ClientSerializer, UserSerializer
 from .permissions import IsClientResponsible, IsInSalesTeam
+from .filters import ClientFilter
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -16,7 +17,7 @@ class ClientViewSet(viewsets.ModelViewSet):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['last_name', 'email']
+    filterset_class = ClientFilter
 
     def get_permissions(self):
         permission_classes = [permissions.IsAuthenticated()]
