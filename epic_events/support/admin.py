@@ -41,5 +41,17 @@ class EventAdmin(admin.ModelAdmin):
             pass
         return read_only_fields
 
+    def has_delete_permission(self, request, obj=None):
+        if request.resolver_match.url_name == 'support_event_change':
+            try:
+                event_pk = int(request.resolver_match.kwargs['object_id'])
+                event = Event.objects.get(pk=event_pk)
+                client = event.client
+                sales_contact = client.sales_contact
+                return request.user == event.support_contact or request.user == sales_contact or request.user.is_superuser
+            except KeyError:
+                pass
+        return super().has_delete_permission(request)
+
 
 admin.site.register(Event, EventAdmin)
