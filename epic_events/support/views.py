@@ -4,13 +4,14 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .models import Event
 from .serializers import EventSerializer
 from authentification.permissions import IsInSupportTeam, IsEventResponsible, IsEventSClientResponsible
+from .filters import EventFilter
 
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['client__last_name', 'client__email', 'event_date']
+    filterset_class = EventFilter
 
     def get_permissions(self):
         permission_classes = [permissions.IsAuthenticated()]
