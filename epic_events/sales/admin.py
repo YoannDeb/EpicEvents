@@ -5,6 +5,8 @@ from .models import Contract
 class ContractAdmin(admin.ModelAdmin):
     list_display = ('client', 'date_created', 'date_updated', 'status', 'amount', 'payment_due')
 
+    search_fields = ('client__first_name', 'client__last_name', 'client__email', 'client__company_name', 'date_created__startswith', 'amount')
+
     def get_actions(self, request):
         actions = super().get_actions(request)
         if not request.user.is_superuser:
