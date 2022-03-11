@@ -7,10 +7,10 @@ from .permissions import IsClientResponsible, IsInSalesTeam
 from .filters import ClientFilter
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [permissions.IsAuthenticated()]
+# class UserViewSet(viewsets.ModelViewSet):
+#     queryset = CustomUser.objects.all()
+#     serializer_class = UserSerializer
+#     permission_classes = [permissions.IsAuthenticated()]
 
 
 class ClientViewSet(viewsets.ModelViewSet):

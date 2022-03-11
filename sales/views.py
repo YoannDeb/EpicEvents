@@ -1,24 +1,25 @@
 from rest_framework import viewsets, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .models import Event
-from .serializers import EventSerializer
-from authentification.permissions import IsInSupportTeam, IsEventResponsible, IsEventSClientResponsible
-from .filters import EventFilter
+from .models import Contract
+from .serializers import ContractSerializer
+from .filters import ContractFilter
+from authentication.permissions import IsInSalesTeam, IsContractSClientResponsible
 
 
-class EventViewSet(viewsets.ModelViewSet):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
+class ContractViewSet(viewsets.ModelViewSet):
+    queryset = Contract.objects.all()
+    serializer_class = ContractSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_class = EventFilter
+    filterset_class = ContractFilter
+
 
     def get_permissions(self):
         permission_classes = [permissions.IsAuthenticated()]
         if self.action == 'retrieve' or self.action == 'list':
             permission_classes = [permissions.IsAuthenticated()]
         if self.action == 'create':
-            permission_classes = [permissions.IsAuthenticated(), IsInSupportTeam()]
+            permission_classes = [permissions.IsAuthenticated(), IsInSalesTeam()]
         if self.action == 'destroy' or self.action == 'update' or self.action == 'partial_update':
-            permission_classes = [permissions.IsAuthenticated(), IsEventResponsible()]
+            permission_classes = [permissions.IsAuthenticated(), IsContractSClientResponsible()]
         return permission_classes

@@ -1,1 +1,5 @@
-/epic_events/authentification/migrations/
+/authentication/migrations/
+/epicevents/static/
+/sales/migrations/
+/support/migrations/
+/static/

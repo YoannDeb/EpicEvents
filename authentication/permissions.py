@@ -1,6 +1,6 @@
 from rest_framework.permissions import BasePermission
 from django.core.exceptions import ObjectDoesNotExist
-from .models import CustomUser, Client
+from .models import Client
 from sales.models import Contract
 from support.models import Event
 
