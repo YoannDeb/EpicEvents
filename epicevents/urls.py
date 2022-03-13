@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.generic.base import RedirectView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -50,9 +51,12 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
+favicon_view = RedirectView.as_view(url=settings.STATIC_URL + 'favicon.ico', permanent=True)
+
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
+        path('favicon.ico', favicon_view),
         path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
         path('login/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
         path('__debug__/', include(debug_toolbar.urls)),
