@@ -147,7 +147,6 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = Path.joinpath(BASE_DIR, 'epicevents/', 'static/')
-MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media/')
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
