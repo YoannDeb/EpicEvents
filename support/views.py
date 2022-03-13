@@ -20,5 +20,5 @@ class EventViewSet(viewsets.ModelViewSet):
         if self.action == 'create':
             permission_classes = [permissions.IsAuthenticated(), IsInSupportTeam()]
         if self.action == 'destroy' or self.action == 'update' or self.action == 'partial_update':
-            permission_classes = [permissions.IsAuthenticated(), IsEventResponsible()]
+            permission_classes = [permissions.IsAuthenticated(), IsEventResponsible() | IsEventSClientResponsible]
         return permission_classes
