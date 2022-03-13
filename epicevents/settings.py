@@ -37,7 +37,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'debug_toolbar',
     'django.contrib.admin',
-    'django.contrib.auth',
+    # 'django.contrib.auth',
+    'epicevents.CustomAdminAuth.CustomAuthConfig',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -145,7 +146,8 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-STATIC_ROOT = Path.joinpath(BASE_DIR, 'epicevents', 'static')
+STATIC_ROOT = Path.joinpath(BASE_DIR, 'epicevents/', 'static/')
+MEDIA_ROOT = Path.joinpath(BASE_DIR, 'media/')
 
 DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
