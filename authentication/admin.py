@@ -30,9 +30,14 @@ class UserCreationForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
-        # Save the provided password in hashed format
+        '''
+        Save the provided password in hashed format and set the attribute is_staff to True
+        :param commit:
+        :return: an instance of the user.
+        '''
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
+        user.is_staff = True
         if commit:
             user.save()
         return user
@@ -58,10 +63,24 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
+
+    def group(self, user):
+        """
+        Shows groups of a user.
+        :param user: The user of which we want to know the group he is part of.
+        :return: A string with all groups of the user.
+        """
+        groups = []
+        for group in user.groups.all():
+            groups.append(group.name)
+        return ' '.join(groups)
+
+    group.short_description = 'Groups'
+
     list_display = (
-        'email', 'first_name', 'last_name', 'phone', 'mobile', 'date_created', 'date_updated', 'is_superuser',
-        'is_staff')
-    list_filter = ('is_superuser',)
+        'email', 'first_name', 'last_name', 'phone', 'mobile', 'is_superuser',
+        'is_staff', 'group', 'date_created', 'date_updated')
+    list_filter = ('is_superuser', 'groups')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'phone', 'mobile')}),
