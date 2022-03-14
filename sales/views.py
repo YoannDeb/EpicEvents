@@ -21,5 +21,5 @@ class ContractViewSet(viewsets.ModelViewSet):
         if self.action == 'create':
             permission_classes = [permissions.IsAuthenticated(), IsInSalesTeam()]
         if self.action == 'destroy' or self.action == 'update' or self.action == 'partial_update':
-            permission_classes = [permissions.IsAuthenticated(), IsContractSClientResponsible()]
+            permission_classes = [permissions.IsAuthenticated(), IsInSalesTeam(), IsContractSClientResponsible()]
         return permission_classes
