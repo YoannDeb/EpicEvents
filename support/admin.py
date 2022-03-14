@@ -21,7 +21,7 @@ class EventAdmin(admin.ModelAdmin):
         try:
             event = get_event_from_admin_request(request)
             sales_contact = get_sales_contact_of_client_from_event(event)
-            if request.user != event.support_contact and request.user != sales_contact:
+            if request.user != event.support_contact and request.user != sales_contact and not request.user.is_superuser:
                 read_only_fields = read_only_fields + (
                     'client', 'support_contact', 'date_created', 'date_updated',
                     'status', 'attendees', 'event_date', 'notes')
