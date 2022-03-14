@@ -7,7 +7,7 @@ class ContractSerializer(serializers.ModelSerializer):
     client_first_name = serializers.CharField(read_only=True, source='client.first_name')
     client_last_name = serializers.CharField(read_only=True, source='client.last_name')
     client_email = serializers.CharField(read_only=True, source='client.email')
-    sales_contact = serializers.CharField(read_only=True, source='client.sales_contact')
+    sales_contact = serializers.IntegerField(read_only=True, source='client.sales_contact.id')
     sales_contact_first_name = serializers.CharField(read_only=True, source='client.sales_contact.first_name')
     sales_contact_last_name = serializers.CharField(read_only=True, source='client.sales_contact.last_name')
     sales_contact_email = serializers.CharField(read_only=True, source='client.sales_contact.email')
