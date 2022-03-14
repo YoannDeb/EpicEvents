@@ -26,5 +26,5 @@ class ClientViewSet(viewsets.ModelViewSet):
         if self.action == 'create':
             permission_classes = [permissions.IsAuthenticated(), IsInSalesTeam()]
         if self.action == 'destroy' or self.action == 'update' or self.action == 'partial_update':
-            permission_classes = [permissions.IsAuthenticated(), IsClientResponsible()]
+            permission_classes = [permissions.IsAuthenticated(), IsInSalesTeam(), IsClientResponsible()]
         return permission_classes
