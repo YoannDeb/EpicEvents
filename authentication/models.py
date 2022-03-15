@@ -35,8 +35,8 @@ class CustomUser(AbstractUser, PermissionsMixin):
     email = models.EmailField(
         max_length=255, unique=True, verbose_name='email address',
         error_messages={'unique': 'A user with this email already exists.'})
-    phone = models.CharField(max_length=100, blank=True)
-    mobile = models.CharField(max_length=100, blank=True)
+    phone = models.CharField(max_length=20, blank=True)
+    mobile = models.CharField(max_length=20, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -68,8 +68,8 @@ class Client(models.Model):
     email = models.EmailField(
         max_length=255, unique=True, verbose_name='email address',
         error_messages={'unique': 'A user with this email already exists.'})
-    phone = models.CharField(max_length=100, blank=True)
-    mobile = models.CharField(max_length=100, blank=True)
+    phone = models.CharField(max_length=20, blank=True)
+    mobile = models.CharField(max_length=20, blank=True)
     company_name = models.CharField(max_length=100, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
