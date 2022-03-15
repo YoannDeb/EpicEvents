@@ -34,7 +34,7 @@ schema_view = get_schema_view(
    openapi.Info(
       title="EpicEvents CRM API",
       default_version='1.0',
-      description="EpicEvents organizes marvellous parties for entreprises",
+      description="EpicEvents organizes marvellous parties for marvellous companies!",
       terms_of_service="https://github.com/YoannDeb/EpicEvents",
       contact=openapi.Contact(email="yoann.deblois@gmail.com"),
       license=openapi.License(name="Open Source"),
