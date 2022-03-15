@@ -12,6 +12,20 @@ class IsInSalesTeam(BasePermission):
         return request.user.groups.filter(name='Sales').exists()
 
 
+class IsInSupportTeam(BasePermission):
+    message = "Access forbidden: You are not part of support team."
+
+    def has_permission(self, request, view):
+        return request.user.groups.filter(name='Support').exists()
+
+
+class IsInSalesOrSupportTeam(BasePermission):
+    message = "Access forbidden: You are not part of sales or support team"
+
+    def has_permission(self, request, view):
+        return request.user.groups.filter(name='Sales').exists() or request.user.groups.filter(name='Support').exists()
+
+
 class IsClientResponsible(BasePermission):
     message = "Access forbidden: You are not responsible of this client."
 
@@ -34,8 +48,8 @@ class IsContractSClientResponsible(BasePermission):
         return request.user == sales_contact
 
 
-class IsEventSClientResponsible(BasePermission):
-    message = "Access forbidden: You are not responsible of the event's client."
+class IsEventResponsibleOrIsEventSClientResponsible(BasePermission):
+    message = "Access forbidden: You are not responsible of this event or it's client."
 
     def has_permission(self, request, view):
         event_pk = int(request.resolver_match.kwargs['pk'])
@@ -43,21 +57,4 @@ class IsEventSClientResponsible(BasePermission):
         client = event.client
         sales_contact = client.sales_contact
 
-        return request.user == sales_contact
-
-
-class IsInSupportTeam(BasePermission):
-    message = "Access forbidden: You are not part of sales team."
-
-    def has_permission(self, request, view):
-        return request.user.groups.filter(name='Support').exists()
-
-
-class IsEventResponsible(BasePermission):
-    message = "Access forbidden: You are not responsible of this event."
-
-    def has_permission(self, request, view):
-        event_pk = int(request.resolver_match.kwargs['pk'])
-        event = Event.objects.get(pk=event_pk)
-
-        return request.user == event.support_contact
+        return request.user == event.support_contact or request.user == sales_contact
