@@ -101,9 +101,8 @@ class UserAdmin(BaseUserAdmin):
 
 class ClientAdmin(admin.ModelAdmin):
     list_display = (
-        'first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'date_created', 'date_updated',
-        'sales_contact')
-    search_fields = ('first_name', 'last_name', 'email', 'company_name')
+        'first_name', 'last_name', 'email', 'sales_contact', 'phone', 'mobile', 'company_name', 'date_created', 'date_updated')
+    search_fields = ('first_name', 'last_name', 'email', 'company_name', 'sales_contact')
 
     def get_actions(self, request):
         actions = super().get_actions(request)
