@@ -9,21 +9,21 @@ class IsInSalesTeam(BasePermission):
     message = "Access forbidden: You are not part of sales team."
 
     def has_permission(self, request, view):
-        return request.user.groups.filter(name='Sales').exists()
+        return request.user.groups.filter(name='Sales').exists() or request.user.is_superuser
 
 
 class IsInSupportTeam(BasePermission):
     message = "Access forbidden: You are not part of support team."
 
     def has_permission(self, request, view):
-        return request.user.groups.filter(name='Support').exists()
+        return request.user.groups.filter(name='Support').exists() or request.user.is_superuser
 
 
 class IsInSalesOrSupportTeam(BasePermission):
     message = "Access forbidden: You are not part of sales or support team"
 
     def has_permission(self, request, view):
-        return request.user.groups.filter(name='Sales').exists() or request.user.groups.filter(name='Support').exists()
+        return request.user.groups.filter(name='Sales').exists() or request.user.groups.filter(name='Support').exists() or request.user.is_superuser
 
 
 class IsClientResponsible(BasePermission):
@@ -33,7 +33,7 @@ class IsClientResponsible(BasePermission):
         client_pk = int(request.resolver_match.kwargs['pk'])
         client = Client.objects.get(pk=client_pk)
 
-        return request.user == client.sales_contact
+        return request.user == client.sales_contact or request.user.is_superuser
 
 
 class IsContractSClientResponsible(BasePermission):
@@ -45,7 +45,7 @@ class IsContractSClientResponsible(BasePermission):
         client = contract.client
         sales_contact = client.sales_contact
 
-        return request.user == sales_contact
+        return request.user == sales_contact or request.user.is_superuser
 
 
 class IsEventResponsibleOrIsEventSClientResponsible(BasePermission):
@@ -57,4 +57,4 @@ class IsEventResponsibleOrIsEventSClientResponsible(BasePermission):
         client = event.client
         sales_contact = client.sales_contact
 
-        return request.user == event.support_contact or request.user == sales_contact
+        return request.user == event.support_contact or request.user == sales_contact or request.user.is_superuser
