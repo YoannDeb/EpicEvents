@@ -3,7 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Event
 from .serializers import EventSerializer
-from authentication.permissions import IsInSupportTeam, IsEventResponsible, IsEventSClientResponsible
+from authentication.permissions import IsInSupportTeam, IsInSalesTeam, IsInSalesOrSupportTeam, IsEventResponsibleOrIsEventSClientResponsible
 from .filters import EventFilter
 
 
@@ -20,5 +20,5 @@ class EventViewSet(viewsets.ModelViewSet):
         if self.action == 'create':
             permission_classes = [permissions.IsAuthenticated(), IsInSupportTeam()]
         if self.action == 'destroy' or self.action == 'update' or self.action == 'partial_update':
-            permission_classes = [permissions.IsAuthenticated(), IsEventResponsible() | IsEventSClientResponsible]
+            permission_classes = [permissions.IsAuthenticated(), IsInSalesOrSupportTeam(), IsEventResponsibleOrIsEventSClientResponsible()]
         return permission_classes
