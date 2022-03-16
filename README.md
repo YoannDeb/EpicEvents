@@ -10,6 +10,8 @@ EpicEvents CRM is composed of an admin interface for managers, sales team and su
 
 It is designed to manage data concerning clients, contracts they make with sales team members and events managed by support team members.
 
+You can consult the ER diagram [here](https://github.com/YoannDeb/EpicEvents/blob/master/ER-EpicEvents.pdf).
+
 ## Local testing
 
 ### Creating Virtual environment and downloading the program:
