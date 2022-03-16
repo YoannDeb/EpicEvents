@@ -139,7 +139,7 @@ class ClientAdmin(admin.ModelAdmin):
                     'first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'date_created',
                     'date_updated', 'sales_contact')
         except KeyError:
-            logging.info("User tried to access a client page that does not exist")
+            logger.warning("User tried to access a client page that does not exist")
         return read_only_fields
 
     def has_delete_permission(self, request, obj=None):
@@ -150,12 +150,12 @@ class ClientAdmin(admin.ModelAdmin):
         :param obj:
         :return: A boolean determining if the user has permission to delete.
         """
-        if request.resolver_match.url_name == 'authentification_client_change':
+        if request.resolver_match.url_name == 'authentication_client_change':
             try:
                 sales_contact = get_sales_contact_from_admin_request(request)
                 return request.user == sales_contact or request.user.is_superuser
             except KeyError:
-                logger.info("User tried to access a client page that does not exist")
+                logger.warning("User tried to access a client page that does not exist")
         return super().has_delete_permission(request)
 
 
