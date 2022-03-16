@@ -117,7 +117,7 @@ class ClientAdmin(admin.ModelAdmin):
         read_only_fields = super().get_readonly_fields(request)
         try:
             sales_contact = get_sales_contact_from_admin_request(request)
-            if request.user != sales_contact or not request.user.is_superuser:
+            if request.user != sales_contact and not request.user.is_superuser:
                 read_only_fields = read_only_fields + (
                     'first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'date_created',
                     'date_updated', 'sales_contact')
