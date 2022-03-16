@@ -189,14 +189,14 @@ LOGGING = {
         'file_debug': {
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
-            'filename': 'logging/debug.log',
+            'filename': 'debug.log',
             'filters': ['require_debug_true'],
             'formatter': 'verbose'
         },
         'file_warning': {
             'level': 'WARNING',
             'class': 'logging.FileHandler',
-            'filename': 'logging/warning.log',
+            'filename': 'warning.log',
             'formatter': 'verbose'
         },
     },
