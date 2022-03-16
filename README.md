@@ -86,3 +86,10 @@ Once server is running, API specifications are accessible on those urls with dif
 * YAML view: http://127.0.0.1/swagger.yaml
 * Swagger-ui view: http://127.0.0.1/swagger/
 * ReDoc view: http://127.0.0.1/redoc/
+
+### Logging
+
+Logs are registered in two files at the root of the project:
+
+* debug.log, which shows all messages, but only activated if DEBUG is set to True in epicevents/settings.py
+* warning.log which shows messages from WARNING level and above. It is always active.
