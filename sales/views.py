@@ -13,7 +13,6 @@ class ContractViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_class = ContractFilter
 
-
     def get_permissions(self):
         permission_classes = [permissions.IsAuthenticated()]
         if self.action == 'retrieve' or self.action == 'list':
