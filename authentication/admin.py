@@ -1,10 +1,15 @@
+import logging
+
 from django.contrib import admin
 from django import forms
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
+
 from .models import CustomUser, Client
 from .utils import get_sales_contact_from_admin_request
+
+logger = logging.getLogger(__name__)
 
 """
 Some modifications to support custom user in admin.
@@ -106,11 +111,8 @@ class ClientAdmin(admin.ModelAdmin):
 
     def get_actions(self, request):
         actions = super().get_actions(request)
-        if not request.user.is_superuser:
-            try:
-                del actions['delete_selected']
-            except KeyError:
-                pass
+        if not request.user.is_superuser and 'delete_selected' in actions:
+            del actions['delete_selected']
         return actions
 
     def get_readonly_fields(self, request, obj=None):
@@ -122,7 +124,7 @@ class ClientAdmin(admin.ModelAdmin):
                     'first_name', 'last_name', 'email', 'phone', 'mobile', 'company_name', 'date_created',
                     'date_updated', 'sales_contact')
         except KeyError:
-            pass
+            logging.info("User tried to access a client page that does not exist")
         return read_only_fields
 
     def has_delete_permission(self, request, obj=None):
@@ -131,7 +133,7 @@ class ClientAdmin(admin.ModelAdmin):
                 sales_contact = get_sales_contact_from_admin_request(request)
                 return request.user == sales_contact or request.user.is_superuser
             except KeyError:
-                pass
+                logger.info("User tried to access a client page that does not exist")
         return super().has_delete_permission(request)
 
 
