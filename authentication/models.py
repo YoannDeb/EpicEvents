@@ -1,6 +1,10 @@
+import logging
+
 from django.contrib.auth.models import AbstractUser, PermissionsMixin, BaseUserManager
 from django.db import models, transaction
 from django.conf import settings
+
+logger = logging.getLogger(__name__)
 
 
 class CustomUserManager(BaseUserManager):
@@ -9,6 +13,7 @@ class CustomUserManager(BaseUserManager):
     """
     def _create_user(self, email, password, **extra_fields):
         if not email:
+            logger.warning("No mail entered for new user.")
             raise ValueError('User must have an email address')
         with transaction.atomic():
             user = self.model(email=self.normalize_email(email), **extra_fields)
@@ -73,7 +78,7 @@ class Client(models.Model):
     company_name = models.CharField(max_length=100, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
-    sales_contact = models.ForeignKey(blank=True, null=True, to=settings.AUTH_USER_MODEL, on_delete=models.SET_NULL)
+    sales_contact = models.ForeignKey(blank=True, null=True, to=settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 
     def __str__(self):
         client_name = f"{self.first_name} {self.last_name} - {self.email}"
