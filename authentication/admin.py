@@ -105,17 +105,32 @@ class UserAdmin(BaseUserAdmin):
 
 
 class ClientAdmin(admin.ModelAdmin):
+    """
+    Custom Client Admin
+    """
     list_display = (
         'first_name', 'last_name', 'email', 'sales_contact', 'phone', 'mobile', 'company_name', 'date_created', 'date_updated')
     search_fields = ('first_name', 'last_name', 'email', 'company_name', 'sales_contact')
 
     def get_actions(self, request):
+        """
+        Overrides get_actions of ModelAdmin to implement removal of delete actions in admin list view for non superusers.
+        :param request: The HTML request.
+        :return: a list of actions
+        """
         actions = super().get_actions(request)
         if not request.user.is_superuser and 'delete_selected' in actions:
             del actions['delete_selected']
         return actions
 
     def get_readonly_fields(self, request, obj=None):
+        """
+        Overrides get_readonly_fields of ModelAdmin to implement deactivation of modification of fields in
+        admin detailed view for non-authorized users, as only superusers and sales_contact of a client are
+        authorized to modify it.
+        :param request: The HTML request.
+        :return: A list of read only fields.
+        """
         read_only_fields = super().get_readonly_fields(request)
         try:
             sales_contact = get_sales_contact_from_admin_request(request)
@@ -128,6 +143,13 @@ class ClientAdmin(admin.ModelAdmin):
         return read_only_fields
 
     def has_delete_permission(self, request, obj=None):
+        """
+        Overrides get_readonly_fields of ModelAdmin to implement deactivation of delete button in admin detailed view
+        for non-authorized users, as only superusers and sales_contact of a client are authorized to modify it.
+        :param request: The HTML request.
+        :param obj:
+        :return: A boolean determining if the user has permission to delete.
+        """
         if request.resolver_match.url_name == 'authentification_client_change':
             try:
                 sales_contact = get_sales_contact_from_admin_request(request)
