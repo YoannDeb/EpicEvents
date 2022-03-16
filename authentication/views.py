@@ -1,8 +1,8 @@
 from rest_framework import viewsets, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .models import Client, CustomUser
-from .serializers import ClientSerializer, UserSerializer
+from .models import Client
+from .serializers import ClientSerializer
 from .permissions import IsClientResponsible, IsInSalesTeam
 from .filters import ClientFilter
 
