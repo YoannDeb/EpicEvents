@@ -4,6 +4,9 @@ from .models import Contract
 
 
 class ContractSerializer(serializers.ModelSerializer):
+    """
+    Contract serializer, with client and sales contact info added as read_only fields.
+    """
     client_first_name = serializers.CharField(read_only=True, source='client.first_name')
     client_last_name = serializers.CharField(read_only=True, source='client.last_name')
     client_email = serializers.CharField(read_only=True, source='client.email')
