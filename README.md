@@ -44,7 +44,7 @@ You first must install postgresSQL and configure a database.
 
 See [official PostgreSQL doc](https://www.postgresql.org/docs/14/tutorial.html) and [official Django doc](https://docs.djangoproject.com/en/4.0/ref/databases/#postgresql-notes) for more info.
 
-You need to create a database for the app, and then configure it in epicevents/settings.py
+You need to create a database for the app, and then configure it in `epicevents/settings.py`.
 
 ### Initiate PostgreSQL database
 
@@ -68,7 +68,7 @@ You will be prompted an email, first and last name, and a password. That's it, t
 
 ### Run EpicEvents CRM
 
-Open a terminal and navigate into the root of the project (i.e. the folder where is situated manage.py) , and run the following command:
+Open a terminal and navigate into the root of the project (i.e. same folder than manager.py), and run the following command:
 
 ```bash
 python manage.py runserver
@@ -78,7 +78,7 @@ The admin page will be accessible at http://127.0.0.1:8000/admin.
 You can then login with previously created superuser email and password.
 It is now possible to populate the database, with some sales or support team members (don't forget to assign roles).
 
-API will be accessible (with Postman for example) at http://127.0.0.1:8000
+API will be accessible (with Postman for example) at http://127.0.0.1:8000 .
 
 ### Documentation of the API endpoints
 
@@ -91,7 +91,7 @@ Once server is running, API specifications are accessible on those urls with dif
 
 ### Logging
 
-Logs are registered in two files at the root of the project:
+Logs are registered in two files at the root of the project (i.e. same folder than manager.py):
 
 * debug.log, which shows all messages, but only activated if DEBUG is set to True in epicevents/settings.py
 * warning.log which shows messages from WARNING level and above. It is always active.
