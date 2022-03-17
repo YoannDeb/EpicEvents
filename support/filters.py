@@ -3,6 +3,9 @@ from .models import Event
 
 
 class EventFilter(filters.FilterSet):
+    """
+    Event filter for API search.
+    """
     class Meta:
         model = Event
         fields = {

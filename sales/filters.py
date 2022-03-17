@@ -3,6 +3,9 @@ from .models import Contract
 
 
 class ContractFilter(filters.FilterSet):
+    """
+    Contract filter for API search.
+    """
     class Meta:
         model = Contract
         fields = {
