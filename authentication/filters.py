@@ -3,6 +3,9 @@ from .models import Client
 
 
 class ClientFilter(filters.FilterSet):
+    """
+    Client filter for API search.
+    """
     class Meta:
         model = Client
         fields = {
