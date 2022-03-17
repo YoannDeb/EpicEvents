@@ -8,7 +8,7 @@ class Contract(models.Model):
     """
     Contract model.
     Two foreign keys:
-    - A sale user
+    - A sales user
     - A client.
     """
     client = models.ForeignKey(blank=True, null=True, to='authentication.CLIENT', on_delete=models.PROTECT, related_name='contracts')

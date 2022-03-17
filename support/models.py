@@ -6,7 +6,7 @@ class Event(models.Model):
     """
     Event model.
     Two foreign keys:
-    - A sale user
+    - A support user
     - A client.
     """
 

@@ -65,7 +65,7 @@ class CustomUser(AbstractUser, PermissionsMixin):
 class Client(models.Model):
     """
     Client model.
-    Gathering info about clients. clients are not users of the app.
+    Gathering info about clients. Clients are not real users of the app.
     Foreign key to sales contact assigned by management user.
     """
     first_name = models.CharField(max_length=100, blank=True)
