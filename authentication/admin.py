@@ -106,7 +106,7 @@ class UserAdmin(BaseUserAdmin):
 
 class ClientAdmin(admin.ModelAdmin):
     """
-    Custom Client Admin
+    Custom client admin, handling admin page for clients.
     """
     list_display = (
         'first_name', 'last_name', 'email', 'sales_contact', 'phone', 'mobile', 'company_name', 'date_created', 'date_updated')
@@ -147,7 +147,6 @@ class ClientAdmin(admin.ModelAdmin):
         Overrides get_readonly_fields of ModelAdmin to implement deactivation of delete button in admin detailed view
         for non-authorized users, as only superusers and sales_contact of a client are authorized to modify it.
         :param request: The HTML request.
-        :param obj:
         :return: A boolean determining if the user has permission to delete.
         """
         if request.resolver_match.url_name == 'authentication_client_change':
