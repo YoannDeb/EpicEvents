@@ -5,12 +5,18 @@ from .models import CustomUser, Client
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """
+    User serializer is unused for now.
+    """
     class Meta:
         model = CustomUser
         fields = ['id', 'first_name', 'last_name', 'email', 'phone', 'mobile', 'date_created', 'date_updated']
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
+    """
+    Serializer for user creation, unused for now.
+    """
     class Meta:
         model = CustomUser
         fields = ['first_name', 'last_name', 'email', 'phone', 'mobile', 'password']
@@ -49,6 +55,9 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
 
 class ClientSerializer(serializers.ModelSerializer):
+    """
+    Client serializer, with sales contact info added as read_only fields.
+    """
     sales_contact_first_name = serializers.CharField(read_only=True, source='sales_contact.first_name')
     sales_contact_last_name = serializers.CharField(read_only=True, source='sales_contact.last_name')
     sales_contact_email = serializers.CharField(read_only=True, source='sales_contact.email')
