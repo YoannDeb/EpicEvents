@@ -14,7 +14,7 @@ class CustomUserManager(BaseUserManager):
     def _create_user(self, email, password, **extra_fields):
         if not email:
             logger.warning("No mail entered for new user.")
-            raise ValueError('User must have an email address')
+            raise ValueError('User must have an email address.')
         with transaction.atomic():
             user = self.model(email=self.normalize_email(email), **extra_fields)
             user.set_password(password)
@@ -66,7 +66,7 @@ class Client(models.Model):
     """
     Client model.
     Gathering info about clients. clients are not users of the app.
-    Foreign key to sales user assigned by management user.
+    Foreign key to sales contact assigned by management user.
     """
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
