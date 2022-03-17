@@ -14,6 +14,15 @@ class EventViewSet(viewsets.ModelViewSet):
     filterset_class = EventFilter
 
     def get_permissions(self):
+        """
+        Overload of get_permission method of parent class ModelViewSet.
+        Defines permission_classes depending on the action.
+        - List or retrieve for authenticated users.
+        - Create for sales team members.
+        - Modifications for support team member which is responsible for the client or sales team member which is
+        responsible of the client of the event.
+        :return: A list of permissions.
+        """
         permission_classes = [permissions.IsAuthenticated()]
         if self.action == 'retrieve' or self.action == 'list':
             permission_classes = [permissions.IsAuthenticated()]
