@@ -35,11 +35,11 @@ class UserCreationForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
-        '''
+        """
         Save the provided password in hashed format and set the attribute is_staff to True
         :param commit:
         :return: an instance of the user.
-        '''
+        """
         user = super().save(commit=False)
         user.set_password(self.cleaned_data["password1"])
         user.is_staff = True
