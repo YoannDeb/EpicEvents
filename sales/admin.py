@@ -38,7 +38,8 @@ class ContractAdmin(admin.ModelAdmin):
         try:
             sales_contact = get_sales_contact_of_client_of_contract_from_admin_request(request)
             if request.user != sales_contact and not request.user.is_superuser:
-                read_only_fields = read_only_fields + ('client', 'date_created', 'date_updated', 'status', 'amount', 'payment_due')
+                read_only_fields = read_only_fields + ('client', 'date_created', 'date_updated', 'status', 'amount',
+                                                       'payment_due')
         except KeyError:
             logger.warning("User tried to access a contract page that does not exist.")
         return read_only_fields

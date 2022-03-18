@@ -17,4 +17,6 @@ class ContractSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Contract
-        fields = ['id', 'client', 'client_first_name', 'client_last_name', 'client_email', 'date_created', 'date_updated', 'status', 'amount', 'payment_due', 'sales_contact', 'sales_contact_first_name', 'sales_contact_last_name', 'sales_contact_email']
+        fields = ['id', 'client', 'client_first_name', 'client_last_name', 'client_email', 'date_created',
+                  'date_updated', 'status', 'amount', 'payment_due', 'sales_contact', 'sales_contact_first_name',
+                  'sales_contact_last_name', 'sales_contact_email']
