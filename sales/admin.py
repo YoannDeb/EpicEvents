@@ -13,7 +13,7 @@ class ContractAdmin(admin.ModelAdmin):
     """
     list_display = ('client', 'sales_contact', 'date_created', 'date_updated', 'status', 'amount', 'payment_due')
     search_fields = ('client__first_name', 'client__last_name', 'client__email', 'client__company_name',
-                     'client__sales_contact', 'date_created__startswith', 'amount')
+                     'date_created__startswith', 'amount')
 
     def get_actions(self, request):
         """
