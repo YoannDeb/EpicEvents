@@ -58,8 +58,8 @@ class CustomUser(AbstractUser, PermissionsMixin):
         return f"{self.first_name} {self.last_name} - {self.email}"
 
     class Meta:
-        verbose_name = "User"
-        verbose_name_plural = "Users"
+        verbose_name = "user"
+        verbose_name_plural = "users"
 
 
 class Client(models.Model):
