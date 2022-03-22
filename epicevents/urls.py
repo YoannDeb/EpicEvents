@@ -48,19 +48,21 @@ urlpatterns = [
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls'))
+    path('api-auth/', include('rest_framework.urls')),
+    # Trick to add favicon with manage.py testing server, to remove in production
+    path('favicon.ico', RedirectView.as_view(url=settings.STATIC_URL + 'favicon.ico', permanent=True)),
+    path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('login/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('', include(authentication_urls)),
+    path('', include(sales_urls)),
+    path('', include(support_urls))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-favicon_view = RedirectView.as_view(url=settings.STATIC_URL + 'favicon.ico', permanent=True)
-
+"""
+Debug toolbar urls only if debug is set on True. Debug toolbar can be removed in production.
+"""
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns = [
-        path('favicon.ico', favicon_view),
-        path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-        path('login/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
         path('__debug__/', include(debug_toolbar.urls)),
-        path('', include(authentication_urls)),
-        path('', include(sales_urls)),
-        path('', include(support_urls))
     ] + urlpatterns
