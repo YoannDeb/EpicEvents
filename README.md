@@ -6,7 +6,7 @@ Part of [Open Classrooms](https://openclassrooms.com) "DA Python" formation, 12t
 
 # EpicEvents CRM
 
-EpicEvents CRM is composed of an admin interface for managers, sales team and support team members on one part, and an API for front ends destined to sales team and support team members.
+EpicEvents CRM is composed of an admin interface for managers, sales team and support team members on one hand, and an API for front ends destined to sales team and support team members on the other hand.
 
 It is designed to manage data concerning clients, contracts they make with sales team members and events managed by support team members.
 
