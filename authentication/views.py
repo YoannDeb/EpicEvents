@@ -19,7 +19,7 @@ class ClientViewSet(viewsets.ModelViewSet):
         Defines permission_classes depending on the action.
         - List or retrieve for authenticated users.
         - Create for sales team members.
-        - Modifications for sale team member which is responsible for the client.
+        - Modifications for sales team member which is responsible for the client.
         :return: A list of permissions.
         """
         permission_classes = [permissions.IsAuthenticated()]
